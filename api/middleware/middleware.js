@@ -34,7 +34,7 @@ const validateUser = (req, res, next) => {
 
 const validatePost = (req, res, next) => {
 	// DO YOUR MAGIC
-	if (!req.body.test) {
+	if (!req.body.text) {
 		res.status(400).json({ message: 'missing required text field' });
 	} else {
 		next();

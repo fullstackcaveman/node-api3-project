@@ -97,6 +97,15 @@ router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
 	// RETURN THE NEWLY CREATED USER POST
 	// this needs a middleware to verify user id
 	// and another middleware to check that the request body is valid
+	const newPost = { ...req.body, user_id: req.user.id };
+
+	Posts.insert(newPost)
+		.then((post) => {
+			res.status(201).json(post);
+		})
+		.catch(() => {
+			res.status(500).json({ message: 'The post could not be submitted' });
+		});
 });
 
 // do not forget to export the router
