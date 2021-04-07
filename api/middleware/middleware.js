@@ -15,6 +15,7 @@ const validateUserId = async (req, res, next) => {
 			res.status(404).json({ message: 'User not found' });
 		} else {
 			req.user = user;
+			console.log(req.user);
 			next();
 		}
 	} catch (err) {

@@ -36,6 +36,14 @@ router.get('/:id', validateUserId, (req, res) => {
 router.post('/', validateUser, (req, res) => {
 	// RETURN THE NEWLY CREATED USER OBJECT
 	// this needs a middleware to check that the request body is valid
+	console.log(req.body);
+	Users.insert(req.body)
+		.then((user) => {
+			res.json(user);
+		})
+		.catch(() => {
+			res.status(500).json({ message: 'Error adding the user' });
+		});
 });
 
 router.put('/:id', validateUserId, validateUser, (req, res) => {
@@ -52,6 +60,8 @@ router.delete('/:id', validateUserId, (req, res) => {
 router.get('/:id/posts', validateUserId, (req, res) => {
 	// RETURN THE ARRAY OF USER POSTS
 	// this needs a middleware to verify user id
+
+	Users.getUserPosts(req.user.id);
 });
 
 router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
