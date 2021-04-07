@@ -50,6 +50,19 @@ router.put('/:id', validateUserId, validateUser, (req, res) => {
 	// RETURN THE FRESHLY UPDATED USER OBJECT
 	// this needs a middleware to verify user id
 	// and another middleware to check that the request body is valid
+	const changes = req.body;
+	Users.update(req.user.id, changes)
+		.then(() => {
+			return Users.getById(req.user.id);
+		})
+		.then((user) => {
+			if (user) {
+				res.json(user);
+			}
+		})
+		.catch(() => {
+			res.status(500).json({ message: 'Error updating the user' });
+		});
 });
 
 router.delete('/:id', validateUserId, (req, res) => {
