@@ -73,11 +73,24 @@ router.delete('/:id', validateUserId, (req, res) => {
 	});
 });
 
-router.get('/:id/posts', validateUserId, (req, res) => {
+router.get('/:id/posts', validateUserId, async (req, res) => {
 	// RETURN THE ARRAY OF USER POSTS
 	// this needs a middleware to verify user id
+	try {
+		const posts = await Users.getUserPosts(req.user.id);
 
-	Users.getUserPosts(req.user.id);
+		if (!posts) {
+			res
+				.status(404)
+				.json({ message: 'The post with the specified ID does not exist' });
+		} else {
+			res.json(posts);
+		}
+	} catch (err) {
+		res
+			.status(500)
+			.json({ message: 'The posts information could not be retrieved' });
+	}
 });
 
 router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
