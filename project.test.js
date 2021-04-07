@@ -33,7 +33,7 @@ describe('server.js', () => {
 		}, 500);
 	});
 	describe('2 [GET] /api/users/:id', () => {
-		it.only('can get the correct user', async () => {
+		it('can get the correct user', async () => {
 			let res = await request(server).get('/api/users/1');
 			expect(res.body).toMatchObject(initialUsers[0]);
 			expect(res.body).toHaveProperty('id');
