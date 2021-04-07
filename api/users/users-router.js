@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 		.then((users) => {
 			res.json(users);
 		})
-		.catch((err) => {
+		.catch(() => {
 			res.status(500).json({
 				message: 'Error retrieving the users',
 			});
