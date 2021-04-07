@@ -11,7 +11,7 @@ server.use(express.json());
 
 // global middlewares and the user's router need to be connected here
 server.use(morgan('dev'));
-// server.use(helmet());
+server.use(helmet());
 server.use(logger);
 
 server.use('/api/users', usersRouter);
