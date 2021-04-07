@@ -1,7 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
-const userRouter = require('./users/users-router');
+const usersRouter = require('./users/users-router');
+const { logger } = require('./middleware/middleware');
 
 const server = express();
 
@@ -10,9 +11,10 @@ server.use(express.json());
 
 // global middlewares and the user's router need to be connected here
 server.use(morgan('dev'));
-server.use(helmet());
+// server.use(helmet());
+server.use(logger);
 
-server.use('/api/users', userRouter);
+server.use('/api/users', usersRouter);
 
 server.get('/', (req, res) => {
 	res.send(`<h2>Let's write some middleware!</h2>`);

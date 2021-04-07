@@ -1,12 +1,24 @@
 const express = require('express');
 
 // You will need `users-model.js` and `posts-model.js` both
+const Users = require('./users-model');
+const Posts = require('../posts/posts-model');
+
 // The middleware functions also need to be required
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
 	// RETURN AN ARRAY WITH ALL THE USERS
+	Users.get(req.query)
+		.then((users) => {
+			res.json(users);
+		})
+		.catch((err) => {
+			res.status(500).json({
+				message: 'Error retrieving the users',
+			});
+		});
 });
 
 router.get('/:id', (req, res) => {
